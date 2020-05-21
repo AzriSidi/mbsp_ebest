@@ -396,23 +396,40 @@ class _ResultSemakState extends State<ResultSemak> {
             showMaterialonIOS: _showMaterialonIOS,
           ),
           children: <Widget>[
-                ListTile(
-                  dense: true,
-                  title: Text(
-                    'Tarikh Siasat', 
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  subtitle: Text(
-                    contacts[0].tkhSiasat, 
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
+            ListTile(
+              dense: true,
+              title: Text(
+                'Tarikh Siasat', 
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold
                 ),
+              ),
+              subtitle: Text(
+                contacts[0].tkhSiasat, 
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+            ListTile(
+              dense: true,
+              title: Text(
+                'Masa Siasat', 
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              subtitle: Text(
+                contacts[0].masaSiasat, 
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
           ],
         ),
       ],
