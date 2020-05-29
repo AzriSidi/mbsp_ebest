@@ -69,27 +69,27 @@ class _MyHomePageState extends State<MyHomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: RaisedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ResultSemak(text:_controller.text),
-                            ),
-                          );
-                        },
-                      child: Text('Cari'),
-                    ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ResultSemak(text:_controller.text),
+                        ),
+                      );
+                    },
+                    child: Text('Cari'),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: RaisedButton(
-                        onPressed: () {
-                          _controller.clear();
-                        },
-                      child: Text('Semula'),
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        _controller.clear();
+                      },
+                    child: Text('Semula'),
                   ),
+                ),
               ],
             ),
           ],
