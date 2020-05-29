@@ -1,8 +1,5 @@
-import 'package:card_settings/card_settings.dart';
 import 'package:flutter/material.dart';
-// import 'PonyExample.dart';
 import 'package:xml/xml.dart' as xml;
-import 'model.dart';
 import 'nav-drawer.dart';
 import 'semak.dart';
 import 'package:http/http.dart' as http;
@@ -21,10 +18,6 @@ class ResultSemak extends StatefulWidget {
 
 class _ResultSemakState extends State<ResultSemak> {
   final double fontSize = 15.0;
-
-  final _ponyModel = PonyModel();
-
-  bool _showMaterialonIOS = true;
 
   static List<Semak> contacts;
 
@@ -61,7 +54,23 @@ class _ResultSemakState extends State<ResultSemak> {
           element.findElements('KORDINAT1').first.text,
           element.findElements('KORDINAT2').first.text,
           element.findElements('NAMAPEMILIK').first.text,
-          element.findElements('BINAAN_JENIS').first.text
+          element.findElements('BINAAN_JENIS').first.text,          
+          element.findElements('NOTIS_BTK').first.text,
+          element.findElements('TKH_BTK').first.text,
+          element.findElements('JENIS_SEKSYEN1').first.text,
+          element.findElements('JENIS_SEKSYEN2').first.text,
+          element.findElements('JENIS_SEKSYEN3').first.text,
+          element.findElements('JENIS_SEKSYEN4').first.text,
+          element.findElements('JENIS_SEKSYEN5').first.text,
+          element.findElements('TEMPOH_BTK1').first.text,
+          element.findElements('TEMPOH_BTK2').first.text,
+          element.findElements('TEMPOH_BTK3').first.text,
+          element.findElements('TEMPOH_BTK4').first.text,
+          element.findElements('TKH_TAMAT1').first.text,
+          element.findElements('TKH_TAMAT2').first.text,
+          element.findElements('TKH_TAMAT3').first.text,
+          element.findElements('TKH_TAMAT4').first.text,
+          element.findElements('NOTIS_SAMPAI').first.text,
         );
       /* }else{
         return null;
@@ -87,41 +96,360 @@ class _ResultSemakState extends State<ResultSemak> {
         renderSuccess: ({data}) => new Text(data),
       );
 
-    var orientation = MediaQuery.of(context).orientation;
-
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text('Maklumat Penyiasatan'),
+        title: Text('Hasil Semakan'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
+          SizedBox(height: 1.0),
           Container(
             padding: EdgeInsets.all(8.0),
-            height: 500,
+            height: 395,
             child:Card(
             elevation: 3.0,
-            child: Center(
-              child: FutureBuilder(
-                future: getTaxFromXML(context),
-                builder: (context,data){
-                                
-                 contacts = data.data;
-                  
-                  if(data.hasData && contacts[0] != null){                   
-                    return GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: 4.5,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 0,
+                  child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    color: Colors.grey,                  
+                    child: Column(
                       children: <Widget>[
+                        getText("Maklumat Penyiasatan Tapak"),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: FutureBuilder(
+                    future: getTaxFromXML(context),
+                    builder: (context,data){                                  
+                    contacts = data.data;
+                    
+                    if(data.hasData && contacts[0] != null){                   
+                      return GridView.count(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 4.5,
+                        children: <Widget>[
+                          ListTile(
+                            dense: true,
+                            title: Text('Tarikh Siasat', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].tkhSiasat, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Masa Siasat', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].masaSiasat, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Waktu Siasat',
+                            style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].waktuSiasat, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Jenis Kesalahan', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].jnsSalah, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('No Premis', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].noPremis, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('No Lot', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].noLot, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Jalan', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].jalan, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Lokasi', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].lokasi, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Bandar', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].bandar, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Daerah', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].mukim, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Mukim', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].mukim, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Parlimen', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].parlimen, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Dun', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].dun, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Latitud', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].kordinat1, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Longitud', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].kordinat2, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Nama Pemilik', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].namaPemilik, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            dense: true,
+                            title: Text('Binaan Jenis', 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            subtitle: Text(contacts[0].binaanJns, 
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                     }else{
+                      return Scaffold(
+                        body: new Center(
+                          child: _asyncLoader,
+                        ),
+                      );
+                    }
+                  }
+                ),
+                ),
+              ],
+            ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(8.0),
+            height: 450,
+            child:Card(
+              elevation: 3.0,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 0,
+                    child: Container(
+                      height: 45,
+                      width: double.infinity,
+                      color: Colors.grey,                  
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          getText("Notis Binaan Tanpa Kebenaran"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                     child: FutureBuilder(
+                      future: getTaxFromXML(context),
+                      builder: (context,data){
+                      contacts = data.data;
+                    
+                    if(data.hasData && contacts[0] != null){
+                      return GridView.count(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 4.5,
+                      children: <Widget>[ 
                         ListTile(
                           dense: true,
-                          title: Text('Tarikh Siasat', 
+                          title: Text('No Notis', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].tkhSiasat, 
+                          subtitle: Text(contacts[0].notikBtk, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -130,13 +458,46 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Masa Siasat', 
+                          title: Text('Tarikh Notis', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].masaSiasat, 
+                          subtitle: Text(contacts[0].tkhBtk, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(),
+                        ListTile(
+                          dense: true,
+                          title: Text('Seksyen 72(1)(A)', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].jnsSksyn1, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(),
+                        ListTile(),
+                        ListTile(
+                          dense: true,
+                          title: Text('Seksyen 72(1)(B)', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].jnsSksyn2, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -145,13 +506,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Waktu Siasat',
-                          style: TextStyle(
+                          title: Text('Tempoh Notis', 
+                            style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].waktuSiasat, 
+                          subtitle: Text(contacts[0].tmphBtk1, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -160,28 +521,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Jenis Kesalahan', 
+                          title: Text('Tarikh Tamat', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].jenisSalah, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('No Premis', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].noPremis, 
+                          subtitle: Text(contacts[0].tkhTamat1, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -190,28 +536,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Jalan', 
+                          title: Text('Seksyen 72(1)(C)', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].jalan, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('Lokasi', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].lokasi, 
+                          subtitle: Text(contacts[0].jnsSksyn2, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -220,28 +551,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Bandar', 
+                          title: Text('Tempoh Notis', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].bandar, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('Daerah', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].mukim, 
+                          subtitle: Text(contacts[0].tmphBtk2, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -250,28 +566,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Mukim', 
+                          title: Text('Tarikh Tamat', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].mukim, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('Parlimen', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].parlimen, 
+                          subtitle: Text(contacts[0].tkhTamat2, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -280,28 +581,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Dun', 
+                          title: Text('Seksyen 72(1)(D)', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].dun, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('Latitud', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].kordinat1, 
+                          subtitle: Text(contacts[0].jnsSksyn3, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -310,28 +596,13 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Longitud', 
+                          title: Text('Tempoh Notis', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].kordinat2, 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          title: Text('Nama Pemilik', 
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          subtitle: Text(contacts[0].namaPemilik, 
+                          subtitle: Text(contacts[0].tmphBtk3, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -340,13 +611,73 @@ class _ResultSemakState extends State<ResultSemak> {
                         ),
                         ListTile(
                           dense: true,
-                          title: Text('Binaan Jenis', 
+                          title: Text('Tarikh Tamat', 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
                             ),
                           ),
-                          subtitle: Text(contacts[0].binaanJenis, 
+                          subtitle: Text(contacts[0].tkhTamat3, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Text('Seksyen 46', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].jnsSksyn4, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Text('Tempoh Notis', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].tmphBtk4, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Text('Tarikh Tamat', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].tkhTamat4, 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          title: Text('Cara Notis', 
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          subtitle: Text(contacts[0].notisSampai, 
                             style: TextStyle(
                               fontSize: fontSize,
                               fontWeight: FontWeight.bold
@@ -354,27 +685,19 @@ class _ResultSemakState extends State<ResultSemak> {
                           ),
                         ),
                       ],
-                    );
-                  }else{
-                    return Scaffold(
-                      body: new Center(
-                        child: _asyncLoader,
-                      ),
-                    );
-                  }
-                }
+                     );
+                    }else{
+                      return Scaffold(
+                        body: new Center(
+                          child: _asyncLoader,
+                        ),
+                      );
+                    }
+                    }
+                    ),
+                  ),
+                ],
               ),
-            ),
-            ),
-          ),
-          // SizedBox(height: 1.0),
-          Container(
-            padding: EdgeInsets.all(8.0),
-            height: 300,
-            child: Form(
-              child: (orientation == Orientation.portrait)
-              ? _buildPortraitLayout()
-              : _buildLandscapeLayout(),
             ),
           ),
         ],
@@ -382,81 +705,14 @@ class _ResultSemakState extends State<ResultSemak> {
     );
   }
 
-  Color silver = HexColor("c4c4c4");
-  CardSettings _buildPortraitLayout() {
-    return CardSettings.sectioned(
-      showMaterialonIOS: _showMaterialonIOS,
-      labelWidth: _ponyModel.labelWidth,
-      children: <CardSettingsSection>[
-        CardSettingsSection(
-          showMaterialonIOS: _showMaterialonIOS,
-          header: CardSettingsHeader(
-            label: _ponyModel.label,
-            // color: silver,
-            showMaterialonIOS: _showMaterialonIOS,
-          ),
-          children: <Widget>[
-            ListTile(
-              dense: true,
-              title: Text(
-                'Tarikh Siasat', 
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-              subtitle: Text(
-                contacts[0].tkhSiasat, 
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-            ListTile(
-              dense: true,
-              title: Text(
-                'Masa Siasat', 
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-              subtitle: Text(
-                contacts[0].masaSiasat, 
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  CardSettings _buildLandscapeLayout() {
-    return CardSettings.sectioned(
-      showMaterialonIOS: _showMaterialonIOS,
-      labelPadding: 12.0,
-      labelWidth: _ponyModel.labelWidth,
-      children: <CardSettingsSection>[
-        CardSettingsSection(
-          showMaterialonIOS: _showMaterialonIOS,
-          header: CardSettingsHeader(
-            label: _ponyModel.label,
-            showMaterialonIOS: _showMaterialonIOS,
-          ),
-          children: <Widget>[
-            CardFieldLayout(
-              <Widget>[
-              ],
-              flexValues: [2, 1],
-            ),
-          ],
-        ),
-      ],
+  Widget getText(String text) {
+    return Padding(
+      padding: EdgeInsets.only(            
+        top: 12,
+      ),
+      child: Text(text,
+        style: TextStyle(fontSize: 20.0,),
+      ),
     );
   }
 

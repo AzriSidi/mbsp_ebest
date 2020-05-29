@@ -1,7 +1,7 @@
 // example viewmodel for the form
 class PonyModel {
   String name = 'Twilight Sparkle';
-  String label = 'Maklumat Penyiasatan Tapak';
+  String label = 'Tapak';
   String type = 'U';
   int age = 7;
   String coatColor = 'D19FE4';
@@ -25,7 +25,7 @@ class PonyModel {
   String email = 'me@nowhere.org';
   String password = 'secret1';
   double rating = 0.0;
-  double labelWidth = 135;
+  double labelWidth = 400;
 }
 
 const List<String> allHobbies = <String>[
