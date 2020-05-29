@@ -18,8 +18,8 @@ class ResultSemak extends StatefulWidget {
 
 class _ResultSemakState extends State<ResultSemak> {
   final double fontSize = 15.0;
-
   static List<Semak> contacts;
+  ScrollController _controller = new ScrollController();
 
   Future<List<Semak>> getTaxFromXML(BuildContext context) async{
     String url = 'http://148.72.213.158:8080/MBSP-ebest/checkTapak/'+widget.text;
@@ -102,6 +102,9 @@ class _ResultSemakState extends State<ResultSemak> {
         title: Text('Hasil Semakan'),
       ),
       body: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        controller: _controller,
         children: <Widget>[
           SizedBox(height: 1.0),
           Container(
