@@ -8,10 +8,21 @@ import '../result_semak.dart';
 class ResultSemakState extends State<ResultSemak> {
   final double fontSize = 15.0;
   static List<Semak> contacts;
+  ApiService api;
   ScrollController _controller = new ScrollController();
 
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+    new GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+  }
 
   reload() {
       _asyncLoaderState.currentState.reloadState();
@@ -20,8 +31,8 @@ class ResultSemakState extends State<ResultSemak> {
   static const TIMEOUT = const Duration(seconds: 3);
   
   @override
-  Widget build(BuildContext context) {
-    ApiService api = new ApiService(widget.text);
+  Widget build(BuildContext context) {    
+    api = new ApiService(widget.getText);
 
     var _asyncLoader = new AsyncLoader(
         key: _asyncLoaderState,
@@ -38,7 +49,8 @@ class ResultSemakState extends State<ResultSemak> {
         title: Text('Hasil Semakan'),
       ),
       body: RefreshIndicator(
-      onRefresh: api.updateList,
+      key: _refreshIndicatorKey,
+      onRefresh: updateList,
       child:ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -654,6 +666,13 @@ class ResultSemakState extends State<ResultSemak> {
     );
   }
 
+  Future<void> updateList() async {
+    print("pull refresh");
+    return api.getTaxFromXML().then((_contacts) {
+      setState(() => contacts = _contacts);
+    });
+  }
+
   Widget getText(String text) {
     return Padding(
       padding: EdgeInsets.only(            
@@ -668,5 +687,5 @@ class ResultSemakState extends State<ResultSemak> {
   getMessage(BuildContext context) async {
     return new Future.delayed(
       TIMEOUT, () => 'Tiada Data');//
-  } 
+  }
 }

@@ -3,16 +3,10 @@ import '../model/semak.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 
-class ApiService{
+class ApiService {
   final String text;
 
   ApiService(this.text);
-
-  Future<void> updateList() async {
-    print("pull refresh");
-    getTaxFromXML();
-    //widget.items = widget.feeds.getList();
-  }
 
   Future<List<Semak>> getTaxFromXML() async{
     String url = 'http://148.72.213.158:8080/MBSP-ebest/checkTapak/$text';

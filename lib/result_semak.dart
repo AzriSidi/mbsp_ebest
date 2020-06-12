@@ -6,6 +6,8 @@ class ResultSemak extends StatefulWidget {
 
   ResultSemak({Key key, this.text}) : super(key: key);
 
+  String get getText => text;
+
   @override
   ResultSemakState createState() => ResultSemakState();
 }
