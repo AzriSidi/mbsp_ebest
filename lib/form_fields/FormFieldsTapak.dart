@@ -1,7 +1,7 @@
 import 'package:form_bloc/form_bloc.dart';
 
-class FormFieldsExampleFormBloc extends FormBloc<String, String> {
-  FormFieldsExampleFormBloc() {
+class FormFieldsTapak extends FormBloc<String, String> {
+  FormFieldsTapak() {
     addFieldBloc(
       fieldBloc: TextFieldBloc(
         name: 'date',
@@ -45,7 +45,7 @@ class FormFieldsExampleFormBloc extends FormBloc<String, String> {
     addFieldBloc(
       fieldBloc: SelectFieldBloc(
         name: 'select2',
-        items: ['Option 1', 'Option 2'],
+        items: ['Binaan Baru', 'Tambahan'],
       ),
     );
     addFieldBloc(
