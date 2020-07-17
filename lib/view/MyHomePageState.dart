@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mbsp_ebest/form_fields/FormFieldsTapak.dart';
 import '../main.dart';
 import '../result_semak.dart';
 
 class MyHomePageState extends State<MyHomePage> {
   final _controller = TextEditingController();
-  
+  final FormFieldsTapak fft = new FormFieldsTapak();
+
+  @override
+  void initState() {
+    fft.locationManage();
+    super.initState();
+  }
+
   @override
   void dispose() {
     // other dispose methods
@@ -21,21 +29,21 @@ class MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
-                child:Container(
-                  width: 150.0,
-                  child: TextField(
-                    autofocus: true,
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'No Kes',
-                      suffixIcon: IconButton(
-                        onPressed: () => _controller.clear(),
-                        icon: Icon(Icons.clear),
-                      ),
+              child: Container(
+                width: 150.0,
+                child: TextField(
+                  autofocus: true,
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: 'No Kes',
+                    suffixIcon: IconButton(
+                      onPressed: () => _controller.clear(),
+                      icon: Icon(Icons.clear),
                     ),
                   ),
                 ),
               ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +54,8 @@ class MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ResultSemak(text:_controller.text),
+                          builder: (context) =>
+                              ResultSemak(text: _controller.text),
                         ),
                       );
                     },
@@ -55,10 +64,10 @@ class MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                    child: RaisedButton(
-                      onPressed: () {
-                        _controller.clear();
-                      },
+                  child: RaisedButton(
+                    onPressed: () {
+                      _controller.clear();
+                    },
                     child: Text('Semula'),
                   ),
                 ),
