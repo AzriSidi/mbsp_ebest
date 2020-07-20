@@ -3,15 +3,18 @@ import 'package:mbsp_ebest/model/salah.dart';
 import 'package:xml/xml.dart';
 import 'package:mbsp_ebest/service/Api_Service.dart';
 
-class FormFieldsNotis extends FormBloc<String, String> {
+//ignore_for_file: close_sinks
+class FormBlocNotis extends FormBloc<String, String> {
   ApiServiceSalah apiSalah = new ApiServiceSalah();
   List<Salah> salah = [];
+  static String keter;
 
-  Stream parseSalahFromXML() async* {
+  Future<void> parseSalahFromXML() async {
     Future<List> _futureOfList = apiSalah.getSalahFromXML();
     salah = await _futureOfList;
     for (var i = 0; i < salah.length; i++) {
-      yield salah[i].keter;
+      keter = salah[i].keter;
+      print("keter1: " + keter);
     }
   }
 
@@ -31,10 +34,10 @@ class FormFieldsNotis extends FormBloc<String, String> {
   final jnsSksyn4 = BooleanFieldBloc();
   final jnsSksyn5 = BooleanFieldBloc();
   final caraNotis = SelectFieldBloc(
-    items: ['Option 1', 'Option 2'],
+    items: [keter],
   );
 
-  FormFieldsNotis() {
+  FormBlocNotis() {
     addFieldBlocs(fieldBlocs: [
       notisBtk,
       tkhBtk,
@@ -50,12 +53,13 @@ class FormFieldsNotis extends FormBloc<String, String> {
       jnsSksyn2,
       jnsSksyn3,
       jnsSksyn4,
-      jnsSksyn5
+      jnsSksyn5,
+      caraNotis
     ]);
   }
 
   @override
-  Stream<FormBlocState<String, String>> onSubmitting() async* {
+  void onSubmitting() async {
     String noNotis = notisBtk.value;
     DateTime _tkhBtk = tkhBtk.value;
     bool _jnsSksyn1 = jnsSksyn1.value;
@@ -129,10 +133,10 @@ class FormFieldsNotis extends FormBloc<String, String> {
 
     if (noNotis.isNotEmpty) {
       await Future<void>.delayed(Duration(seconds: 2));
-      yield state.toSuccess(successResponse: 'Success', canSubmitAgain: true);
+      emitSuccess(canSubmitAgain: true);
       print(bookshelfXml);
     } else {
-      yield state.toFailure(failureResponse: "No Notis kosong");
+      emitFailure(failureResponse: "No Notis kosong");
     }
   }
 }

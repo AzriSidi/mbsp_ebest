@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'form/FormBlocNotis.dart';
+import 'form/FormNotis.dart';
 import 'nav-drawer.dart';
-import 'form/FormBlocTapak.dart';
+import 'form/FormTapak.dart';
 
 class KesBaru extends StatelessWidget {
-  final FormBlocTapak tapak = new FormBlocTapak();
-  final FormBlocNotis notis = new FormBlocNotis();
+  final FormTapak tapak = new FormTapak();
+  final FormNotis notis = new FormNotis();
 
   @override
-  Widget build(BuildContext context) {    
-    return DefaultTabController(  
+  Widget build(BuildContext context) {
+    return DefaultTabController(
       length: 2,
       initialIndex: 0,
       child: Scaffold(
@@ -17,16 +17,11 @@ class KesBaru extends StatelessWidget {
         appBar: AppBar(
           title: Text('Kes Baru'),
           bottom: TabBar(
-            tabs: [
-              Tab(text: 'Tapak'),
-              Tab(text: 'Notis')
-            ],
+            tabs: [Tab(text: 'Tapak'), Tab(text: 'Notis')],
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
-            tapak,notis
-          ],
+          children: <Widget>[tapak, notis],
         ),
       ),
     );

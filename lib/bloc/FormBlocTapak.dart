@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:form_bloc/form_bloc.dart';
 import 'package:location/location.dart';
 
-class FormFieldsTapak extends FormBloc<String, String> {
+//ignore_for_file: close_sinks
+class FormBlocTapak extends FormBloc<String, String> {
   static String lati, longi;
   Location location = new Location();
   bool _serviceEnabled;
@@ -25,8 +26,8 @@ class FormFieldsTapak extends FormBloc<String, String> {
         // Use current location
         lati = currentLocation.latitude.toString();
         longi = currentLocation.longitude.toString();
+        // print(lati + " , " + longi);
       });
-      print(lati + " , " + longi);
     } catch (e) {
       print("errorLocation: " + e.toString());
     }
@@ -76,7 +77,7 @@ class FormFieldsTapak extends FormBloc<String, String> {
     items: ['Binaan Baru', 'Tambahan'],
   );
 
-  FormFieldsTapak() {
+  FormBlocTapak() {
     addFieldBlocs(fieldBlocs: [
       date,
       time,

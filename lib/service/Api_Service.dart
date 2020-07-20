@@ -9,13 +9,13 @@ class ApiService {
 
   ApiService(this.text);
 
-  Future<List<Semak>> getTaxFromXML() async{
+  Future<List<Semak>> getTaxFromXML() async {
     String url = 'http://148.72.213.158:8080/MBSP-ebest/checkTapak/$text';
     debugPrint('getUrl: $url');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        return parseContacts(response.body); 
+        return parseContacts(response.body);
       } else {
         throw Exception('Unable to fetch products from the REST API');
       }
@@ -28,10 +28,10 @@ class ApiService {
   List<Semak> parseContacts(String responseBody) {
     var raw = xml.parse(responseBody);
     var elements = raw.findAllElements('item');
-          
-    return elements.map((element){
+
+    return elements.map((element) {
       return Semak(
-        element.findElements('TKH_SIASAT').first.text, 
+        element.findElements('TKH_SIASAT').first.text,
         element.findElements('MASA_SIASAT').first.text,
         element.findElements('WAKTU_SIASAT').first.text,
         element.findElements('JENIS_SALAH').first.text,
@@ -47,7 +47,7 @@ class ApiService {
         element.findElements('KORDINAT1').first.text,
         element.findElements('KORDINAT2').first.text,
         element.findElements('NAMAPEMILIK').first.text,
-        element.findElements('BINAAN_JENIS').first.text,          
+        element.findElements('BINAAN_JENIS').first.text,
         element.findElements('NOTIS_BTK').first.text,
         element.findElements('TKH_BTK').first.text,
         element.findElements('JENIS_SEKSYEN1').first.text,
@@ -69,14 +69,14 @@ class ApiService {
   }
 }
 
-class  ApiServiceSalah{  
-  Future<List<Salah>> getSalahFromXML() async{
+class ApiServiceSalah {
+  Future<List<Salah>> getSalahFromXML() async {
     String url = 'http://192.168.0.188/MBSP-ebest/jsn_kslhn';
     debugPrint('getUrl: $url');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        return parseXml(response.body); 
+        return parseXml(response.body);
       } else {
         throw Exception('Unable to fetch products from the REST API');
       }
@@ -89,10 +89,10 @@ class  ApiServiceSalah{
   List<Salah> parseXml(String responseBody) {
     var raw = xml.parse(responseBody);
     var elements = raw.findAllElements('item');
-            
-    return elements.map((element){
+
+    return elements.map((element) {
       return Salah(
-        element.findAllElements('KOD').first.text, 
+        element.findAllElements('KOD').first.text,
         element.findElements('KETERANGAN').first.text,
       );
     }).toList();

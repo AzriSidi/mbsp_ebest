@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mbsp_ebest/form_fields/FormFieldsTapak.dart';
+import 'package:mbsp_ebest/bloc/FormBlocNotis.dart';
+import 'package:mbsp_ebest/bloc/FormBlocTapak.dart';
 import '../main.dart';
 import '../result_semak.dart';
 
 class MyHomePageState extends State<MyHomePage> {
   final _controller = TextEditingController();
-  final FormFieldsTapak fft = new FormFieldsTapak();
+  final FormBlocTapak fft = new FormBlocTapak();
+  final FormBlocNotis ffn = new FormBlocNotis();
 
   @override
   void initState() {
     fft.locationManage();
+    ffn.parseSalahFromXML();
     super.initState();
   }
 
