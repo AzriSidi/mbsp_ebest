@@ -97,4 +97,20 @@ class ApiServiceSalah {
       );
     }).toList();
   }
+
+  Future<bool> postNotisXML(data) async {
+    bool task = false;
+    String url = 'http://192.168.0.188/MBSP-ebest/notis';
+    debugPrint('url: $url');
+    try {
+      http.post(url, body: data, // data is your normal json data as a string,
+          headers: {
+            'Content-type': 'application/xml',
+          });
+      task = true;
+    } catch (e) {
+      print(e);
+    }
+    return task;
+  }
 }

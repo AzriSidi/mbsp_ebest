@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'kes_baru.dart';
 import 'laporan.dart';
+import 'kamera.dart';
 import 'main.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -16,10 +17,11 @@ class NavDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             decoration: BoxDecoration(
-                color: Colors.green,
-                /* image: DecorationImage(
+              color: Colors.green,
+              /* image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage('assets/images/cover.jpg')) */),
+                    image: AssetImage('assets/images/cover.jpg')) */
+            ),
           ),
           ListTile(
             leading: Icon(Icons.search),
@@ -60,7 +62,14 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.camera_alt),
             title: Text('Kamera'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => Kamera(),
+                ),
+              )
+            },
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
