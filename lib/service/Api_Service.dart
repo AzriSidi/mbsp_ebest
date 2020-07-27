@@ -70,11 +70,30 @@ class ApiService {
 }
 
 class ApiServiceSalah {
+  static String ip = '192.168.0.188';
+  String urlSalah = 'http://' + ip + '/MBSP-ebest/jns_kslhn';
+  String urlNtsSmpai = 'http://' + ip + '/MBSP-ebest/nts_smpai';
+  String urlNotis = 'http://' + ip + '/MBSP-ebest/notis';
+
   Future<List<Salah>> getSalahFromXML() async {
-    String url = 'http://192.168.0.188/MBSP-ebest/jsn_kslhn';
-    debugPrint('getUrl: $url');
+    debugPrint('getUrl: $urlSalah');
     try {
-      final response = await http.get(url);
+      final response = await http.get(urlSalah);
+      if (response.statusCode == 200) {
+        return parseXml(response.body);
+      } else {
+        throw Exception('Unable to fetch products from the REST API');
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<List<Salah>> getNtsSmpaiFromXML() async {
+    debugPrint('getUrl: $urlNtsSmpai');
+    try {
+      final response = await http.get(urlNtsSmpai);
       if (response.statusCode == 200) {
         return parseXml(response.body);
       } else {
@@ -100,10 +119,10 @@ class ApiServiceSalah {
 
   Future<bool> postNotisXML(data) async {
     bool task = false;
-    String url = 'http://192.168.0.188/MBSP-ebest/notis';
-    debugPrint('url: $url');
+    debugPrint('url: $urlNotis');
     try {
-      http.post(url, body: data, // data is your normal json data as a string,
+      http.post(urlNotis,
+          body: data, // data is your normal json data as a string,
           headers: {
             'Content-type': 'application/xml',
           });

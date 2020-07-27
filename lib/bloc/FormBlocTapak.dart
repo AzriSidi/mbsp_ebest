@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:form_bloc/form_bloc.dart';
 import 'package:location/location.dart';
+import 'package:mbsp_ebest/model/salah.dart';
+import 'package:mbsp_ebest/service/Api_Service.dart';
 
 //ignore_for_file: close_sinks
 class FormBlocTapak extends FormBloc<String, String> {
@@ -9,6 +11,10 @@ class FormBlocTapak extends FormBloc<String, String> {
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+  ApiServiceSalah apiSalah = new ApiServiceSalah();
+  List<Salah> salah = [];
+  static List<String> keter = [];
+  static List<String> kod = [];
 
   Future<LocationData> locationManage() async {
     try {
@@ -26,12 +32,24 @@ class FormBlocTapak extends FormBloc<String, String> {
         // Use current location
         lati = currentLocation.latitude.toString();
         longi = currentLocation.longitude.toString();
-        // print(lati + " , " + longi);
+        // print("Location: " + lati + " , " + longi);
       });
     } catch (e) {
       print("errorLocation: " + e.toString());
     }
     return _locationData;
+  }
+
+  Future<void> parseSalahFromXML() async {
+    try {
+      Future<List> _futureOfList = apiSalah.getSalahFromXML();
+      salah = await _futureOfList;
+      for (var i = 0; i < salah.length; i++) {
+        keter.add(salah[i].keter);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   final date = InputFieldBloc<DateTime, Object>();
@@ -55,7 +73,7 @@ class FormBlocTapak extends FormBloc<String, String> {
 
   final nama = TextFieldBloc();
   final jnsKslh = SelectFieldBloc(
-    items: ['Option 1', 'Option 2', 'Option 3'],
+    items: keter,
   );
   final mukim = SelectFieldBloc(
     items: ['Option 1', 'Option 2', 'Option 3'],

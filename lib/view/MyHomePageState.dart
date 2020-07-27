@@ -7,13 +7,14 @@ import '../result_semak.dart';
 
 class MyHomePageState extends State<MyHomePage> {
   final _controller = TextEditingController();
-  final FormBlocTapak fft = new FormBlocTapak();
-  final FormBlocNotis ffn = new FormBlocNotis();
+  final FormBlocTapak fbt = new FormBlocTapak();
+  final FormBlocNotis fbn = new FormBlocNotis();
 
   @override
   void initState() {
-    fft.locationManage();
-    ffn.parseSalahFromXML();
+    fbt.locationManage();
+    fbt.parseSalahFromXML();
+    fbn.parseNtsSmpaiXML();
     super.initState();
   }
 

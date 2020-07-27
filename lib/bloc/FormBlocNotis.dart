@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:form_bloc/form_bloc.dart';
-import 'package:mbsp_ebest/form/FormNotis.dart';
 import 'package:mbsp_ebest/model/salah.dart';
 import 'package:xml/xml.dart';
 import 'package:mbsp_ebest/service/Api_Service.dart';
@@ -12,18 +10,14 @@ class FormBlocNotis extends FormBloc<String, String> {
   List<Salah> salah = [];
   static List<String> keter = [];
   static List<String> kod = [];
-  static var concatenate = StringBuffer();
-  static BuildContext context;
 
-  Future<void> parseSalahFromXML() async {
+  Future<void> parseNtsSmpaiXML() async {
     try {
-      Future<List> _futureOfList = apiSalah.getSalahFromXML();
+      Future<List> _futureOfList = apiSalah.getNtsSmpaiFromXML();
       salah = await _futureOfList;
       for (var i = 0; i < salah.length; i++) {
         keter.add(salah[i].keter);
       }
-      concatenate.write(kod);
-      print(concatenate.toString());
     } catch (e) {
       print(e);
     }

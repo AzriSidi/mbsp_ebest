@@ -11,11 +11,8 @@ class FormNotis extends StatefulWidget {
 }
 
 class FormNotisState extends State<FormNotis> {
-  final FormBlocNotis fbn = new FormBlocNotis();
-
   @override
   void initState() {
-    fbn.parseSalahFromXML();
     super.initState();
   }
 
