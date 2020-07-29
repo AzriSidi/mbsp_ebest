@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mbsp_ebest/camera.dart';
 import 'kes_baru.dart';
 import 'laporan.dart';
-import 'kamera.dart';
 import 'main.dart';
 
+// ignore: must_be_immutable
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class NavDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder: (context) => Kamera(),
+                  builder: (context) => CameraPicker(),
                 ),
               )
             },
