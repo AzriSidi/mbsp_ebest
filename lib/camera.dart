@@ -96,7 +96,7 @@ class _CameraPickerState extends State<CameraPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kamera'),
+        title: Text('camera'),
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
