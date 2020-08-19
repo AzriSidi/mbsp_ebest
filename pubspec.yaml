@@ -40,8 +40,9 @@ dependencies:
   camera: ^0.5.8+2
   path_provider: ^1.6.11
   gallery_saver: ^2.0.1
-  album_saver: ^0.0.2
-  # path: ^1.7.0
+  xml: ^4.2.0
+  dio: ^3.0.10
+  http_parser: ^3.1.4
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:xml/xml.dart';
 import '../model/semak.dart';
 import 'package:http/http.dart' as http;
-import 'package:xml/xml.dart' as xml;
 import '../model/salah.dart';
 
 class ApiService {
@@ -26,7 +30,7 @@ class ApiService {
   }
 
   List<Semak> parseContacts(String responseBody) {
-    var raw = xml.parse(responseBody);
+    var raw = XmlDocument.parse(responseBody);
     var elements = raw.findAllElements('item');
 
     return elements.map((element) {
@@ -74,6 +78,7 @@ class ApiServiceSalah {
   String urlSalah = 'http://' + ip + '/MBSP-ebest/jns_kslhn';
   String urlNtsSmpai = 'http://' + ip + '/MBSP-ebest/nts_smpai';
   String urlNotis = 'http://' + ip + '/MBSP-ebest/notis';
+  String urlUpload = 'http://192.168.0.188/MBSP-ebest/imgUpload';
 
   Future<List<Salah>> getSalahFromXML() async {
     debugPrint('getUrl: $urlSalah');
@@ -106,7 +111,7 @@ class ApiServiceSalah {
   }
 
   List<Salah> parseXml(String responseBody) {
-    var raw = xml.parse(responseBody);
+    var raw = XmlDocument.parse(responseBody);
     var elements = raw.findAllElements('item');
 
     return elements.map((element) {
@@ -121,15 +126,27 @@ class ApiServiceSalah {
     bool task = false;
     debugPrint('url: $urlNotis');
     try {
-      http.post(urlNotis,
-          body: data, // data is your normal json data as a string,
-          headers: {
-            'Content-type': 'application/xml',
-          });
+      http.post(urlNotis, body: data, headers: {
+        'Content-type': 'application/xml',
+      });
       task = true;
     } catch (e) {
       print(e);
     }
     return task;
+  }
+
+  uploadImg(PickedFile fileImg) async {
+    try {
+      String fileName = fileImg.path.split('/').last;
+      File file = File(fileImg.path);
+      String base64Image = base64Encode(file.readAsBytesSync());
+      FormData formData =
+          FormData.fromMap({"image": base64Image, "filename": fileName});
+      Response response = await Dio().post(urlUpload, data: formData);
+      print(response.data.toString());
+    } catch (e) {
+      print("Error uploadImg: " + e.toString());
+    }
   }
 }
