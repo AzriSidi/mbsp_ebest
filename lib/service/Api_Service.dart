@@ -74,7 +74,7 @@ class ApiService {
 }
 
 class ApiServiceSalah {
-  static String ip = '192.168.0.188';
+  static String ip = '148.72.213.158:8080';
   String urlSalah = 'http://' + ip + '/MBSP-ebest/jns_kslhn';
   String urlNtsSmpai = 'http://' + ip + '/MBSP-ebest/nts_smpai';
   String urlNotis = 'http://' + ip + '/MBSP-ebest/notis';
